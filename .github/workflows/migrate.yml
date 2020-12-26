@@ -20,3 +20,5 @@ jobs:
       - run: yarn prisma migrate deploy --preview-feature
         env:
           POSTGRESQL_URL: ${{ secrets.POSTGRESQL_URL }}
+      # Fetch
+      - run: yarn start:zaznamki
