@@ -592,6 +592,54 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@prisma/bar@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@prisma/bar@npm:0.0.1"
+  checksum: eb9d47dbacce9db22a6a76f02095ad063a57406cfcd060ed6718f600ffa805460893fc8a70ea4ab76f28dfbbd629c2f86757dc8b039f6b21ab3987747523921f
+  languageName: node
+  linkType: hard
+
+"@prisma/cli@npm:^2.13.1":
+  version: 2.13.1
+  resolution: "@prisma/cli@npm:2.13.1"
+  dependencies:
+    "@prisma/bar": ^0.0.1
+    "@prisma/engines": 2.13.1-2.fcbc4bb2d306c86c28014f596b1e8c7980af8bd4
+  bin:
+    prisma: build/index.js
+    prisma2: build/index.js
+  checksum: c1d2c3b801212cb284ec9f201248e44e0b211b6144a489f43028a7358817d790d7dc25ec12e0ef08c9214d30df56939535ae022ab2fcb03d3c6181ff5c4d38d5
+  languageName: node
+  linkType: hard
+
+"@prisma/client@npm:^2.13.1":
+  version: 2.13.1
+  resolution: "@prisma/client@npm:2.13.1"
+  dependencies:
+    "@prisma/engines-version": 2.13.1-2.fcbc4bb2d306c86c28014f596b1e8c7980af8bd4
+  peerDependencies:
+    "@prisma/cli": "*"
+  peerDependenciesMeta:
+    "@prisma/cli":
+      optional: true
+  checksum: b57d3adc03e87af070ab29642941f22fbc2f00b7e04adde3238e7a5df98a0326e9674537d91355790ca865ff28f6f09208e947b9c4bc19c9f4f1496ab95bfad0
+  languageName: node
+  linkType: hard
+
+"@prisma/engines-version@npm:2.13.1-2.fcbc4bb2d306c86c28014f596b1e8c7980af8bd4":
+  version: 2.13.1-2.fcbc4bb2d306c86c28014f596b1e8c7980af8bd4
+  resolution: "@prisma/engines-version@npm:2.13.1-2.fcbc4bb2d306c86c28014f596b1e8c7980af8bd4"
+  checksum: cc6f1fe223da37df9f98e01a4ceb3703118875f46e9bbd5e54f01f6472794ea4b05c6dc312419205e0efca917cabdac137bd05eb99b92a10143003490265a1c9
+  languageName: node
+  linkType: hard
+
+"@prisma/engines@npm:2.13.1-2.fcbc4bb2d306c86c28014f596b1e8c7980af8bd4":
+  version: 2.13.1-2.fcbc4bb2d306c86c28014f596b1e8c7980af8bd4
+  resolution: "@prisma/engines@npm:2.13.1-2.fcbc4bb2d306c86c28014f596b1e8c7980af8bd4"
+  checksum: e709fe3f91bafaea3e8c3bea491a9e0bbd41575293ac929ad81f379f0cb180b3fab2a9445bda04c905d565c7e501f6b0d105792828098947eaee386e79f51569
+  languageName: node
+  linkType: hard
+
 "@sinonjs/commons@npm:^1.7.0":
   version: 1.8.1
   resolution: "@sinonjs/commons@npm:1.8.1"
@@ -695,10 +743,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node-fetch@npm:^2":
+  version: 2.5.7
+  resolution: "@types/node-fetch@npm:2.5.7"
+  dependencies:
+    "@types/node": "*"
+    form-data: ^3.0.0
+  checksum: 101f6e8474407f957dfe1750d82aa0bcaa56347d09c8ba8634e6a901d07032533c0a578860691d915ff8fa230355700c41c04ae7e505840b5d6ff8cc3ece7741
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*":
   version: 14.14.14
   resolution: "@types/node@npm:14.14.14"
   checksum: dea8d257d49d68c65dafa6ebde9453bb61b67febc92ed8d7e38fce8b95f18d32ccffb3ab37021f9be8d1e5c65cd59cdb7dd8981d9b89b2be103b3012aee09fcf
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^14.14.16":
+  version: 14.14.16
+  resolution: "@types/node@npm:14.14.16"
+  checksum: 220a7496ec73861ad7fb4ae762618bb46ac9d5d5f92f3a2fcebfd1a81a509ff558eface7bcd1d632598a8a28f856a74b324e7165918e8334a59c221cb06d15e3
   languageName: node
   linkType: hard
 
@@ -1339,7 +1404,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"combined-stream@npm:^1.0.6, combined-stream@npm:~1.0.6":
+"combined-stream@npm:^1.0.6, combined-stream@npm:^1.0.8, combined-stream@npm:~1.0.6":
   version: 1.0.8
   resolution: "combined-stream@npm:1.0.8"
   dependencies:
@@ -1906,6 +1971,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"form-data@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "form-data@npm:3.0.0"
+  dependencies:
+    asynckit: ^0.4.0
+    combined-stream: ^1.0.8
+    mime-types: ^2.1.12
+  checksum: 1af88217b449eda6566a0d95185f2baa403ed2a0e3b11547069f6062be66cbac7c8d7a25f0fc59560702e96526e659b5b9e5a8c6fefe00f06da44338191a9133
+  languageName: node
+  linkType: hard
+
 "form-data@npm:~2.3.2":
   version: 2.3.3
   resolution: "form-data@npm:2.3.3"
@@ -2156,6 +2232,15 @@ fsevents@^2.1.2:
   dependencies:
     function-bind: ^1.1.1
   checksum: c686e15300d41364486c099a9259d9c418022c294244843dcd712c4c286ff839d4f23a25413baa28c4d2c1e828afc2aaab70f685400b391533980223c71fa1ca
+  languageName: node
+  linkType: hard
+
+"he@npm:1.2.0":
+  version: 1.2.0
+  resolution: "he@npm:1.2.0"
+  bin:
+    he: bin/he
+  checksum: 212122003c20c8c17ac0c83a419b4c8e835411ff6ab9195d053ea6e4a0597cc005b5b8eabcbd57b0b0c0fe676f0049e09315845fff4e051198845491cbba260e
   languageName: node
   linkType: hard
 
@@ -3433,6 +3518,13 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
+"node-fetch@npm:^2.6.1":
+  version: 2.6.1
+  resolution: "node-fetch@npm:2.6.1"
+  checksum: cbb171635e538162b977eac5dfe7a1e07a9a02e991924377a6435502291e2f823d306b95aabc455caebf4a118ccf836868462bc70ccc3095af02bb9da61fda37
+  languageName: node
+  linkType: hard
+
 "node-gyp@npm:latest":
   version: 7.1.2
   resolution: "node-gyp@npm:7.1.2"
@@ -3450,6 +3542,15 @@ fsevents@^2.1.2:
   bin:
     node-gyp: bin/node-gyp.js
   checksum: fca9ecb1be01f707b76c2aec01f0f2ef4ff45c4e24df378c01a4a2c93b4a8172b47ad59f07af91c54a797a8a77fc72e087e29a97a52c892df507245530c46bfa
+  languageName: node
+  linkType: hard
+
+"node-html-parser@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "node-html-parser@npm:2.0.0"
+  dependencies:
+    he: 1.2.0
+  checksum: b6d0323133c7a4551bc4767e45aff0d109add87df7ab618524d62e7535f5f5dd5b8eeaad59e9fa9d5d998f4973d95fcdd7b4b1f1b81af576d2e68a9e61cef789
   languageName: node
   linkType: hard
 
@@ -4805,7 +4906,13 @@ typescript@^4.1.3:
   version: 0.0.0-use.local
   resolution: "typescript@workspace:."
   dependencies:
+    "@prisma/cli": ^2.13.1
+    "@prisma/client": ^2.13.1
+    "@types/node": ^14.14.16
+    "@types/node-fetch": ^2
     jest: ^26.6.3
+    node-fetch: ^2.6.1
+    node-html-parser: ^2.0.0
     prettier: ^2.2.1
     ts-jest: ^26.4.4
     ts-node: ^9.1.1

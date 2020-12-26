@@ -1,0 +1,51 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("POSTGRESQL_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+// Predstavlja eno nepremičnino v času.
+model Oglas {
+    id         String   @id @default(cuid())
+    created_at DateTime @default(now())
+
+    // Zaznamek
+    zaznamek    Zaznamek @relation(fields: [zaznamek_id], references: [db_id])
+    zaznamek_id String
+
+    // Informacije o oglasu
+    naslov      String
+    kratek_opis String?
+    dolg_opis   String?
+    slike       String[]
+
+    vrsta         String?
+    regija        String?
+    upravna_enota String?
+    obcina        String?
+
+    velikost Float?
+    cena     Float?
+    leto     Int?
+    st_sob   Float?
+}
+
+enum Posredovanje {
+    NAJEM
+    ODDAJA
+    NAKUP
+    PRODAJA
+}
+
+model Zaznamek {
+    db_id String @id @default(cuid())
+
+    id           String       @unique
+    url          String
+    posredovanje Posredovanje
+
+    oglasi Oglas[]
+}

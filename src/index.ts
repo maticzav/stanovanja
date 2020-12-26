@@ -1,11 +1,3 @@
-/* Configuration */
-
-/* Program */
-
-async function main() {}
-
-/* Poženemo program */
-
-if (require.main === module) {
-  main()
-}
+/**
+ * Ločeno pregledagamo vse objavljene oglase in nato poberemo še podatke o njih.
+ */
