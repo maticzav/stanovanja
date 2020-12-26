@@ -1,0 +1,22 @@
+name: Migrate
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Migrate DB
+    runs-on: ubuntu-latest
+    steps:
+      # Setup
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+      - run: yarn install
+      # Migrate DB
+      - run: yarn prisma migrate deploy --preview-feature
+        env:
+          POSTGRESQL_URL: ${{ secrets.POSTGRESQL_URL }}

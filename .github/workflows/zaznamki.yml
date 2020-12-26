@@ -24,10 +24,6 @@ jobs:
         with:
           node-version: '13.x'
       - run: yarn install
-      # Migrate DB
-      - run: yarn prisma migrate deploy --preview-feature
-        env:
-          POSTGRESQL_URL: ${{ secrets.POSTGRESQL_URL }}
       # Fetch
       - run: yarn start:zaznamki
         env:
