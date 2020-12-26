@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+
+    "rootDir": "src",
+    "outDir": "dist",
+
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "sourceMap": true,
+
+    "lib": ["esnext"],
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
