@@ -1,4 +1,4 @@
-name: Weekly fetch
+name: Zaznamki
 
 on:
   schedule:
@@ -11,7 +11,7 @@ on:
     # │ │ │ │ │
     # │ │ │ │ │
     # * * * * *
-    - cron: '0 0 1/5 * ?'
+    - cron: '0 19 * * ?'
 
 jobs:
   build:
@@ -24,5 +24,11 @@ jobs:
         with:
           node-version: '13.x'
       - run: yarn install
+      # Migrate DB
+      - run: yarn prisma migrate deploy --preview-feature
+        env:
+          POSTGRESQL_URL: ${{ secrets.POSTGRESQL_URL }}
       # Fetch
-      - run: yarn start
+      - run: yarn start:zaznamki
+        env:
+          POSTGRESQL_URL: ${{ secrets.POSTGRESQL_URL }}

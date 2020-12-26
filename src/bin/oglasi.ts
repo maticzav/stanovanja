@@ -12,16 +12,36 @@ async function main() {
   // Naloži informacije o oglasih.
   const zaznamki = await client.zaznamek.findMany({})
 
-  for (const zaznamek of zaznamki) {
-    const oglas = await naloziOglas(zaznamek.url)
+  for (const { url, id, db_id } of zaznamki) {
+    const oglas = await naloziOglas(url)
 
     if (oglas === null) continue
+
+    // Poglej že obstoječ oglas in primerjaj podatke.
+    const zaznamek = await client.zaznamek.findUnique({
+      where: { db_id: db_id },
+      include: {
+        oglasi: {
+          orderBy: { created_at: 'desc' },
+        },
+      },
+    })
+
+    if (zaznamek && zaznamek.oglasi.length > 0) {
+      const zadnji_oglas = zaznamek.oglasi[0]
+
+      // Če se cena od zadnjega oglasa ni spremenila ne naredi novega zaznamka.
+      if (oglas.cena === zadnji_oglas.cena) {
+        console.log(`Nespremenjen ${id}`)
+        continue
+      }
+    }
 
     // Shrani oglas v bazo.
     const db = await client.oglas.create({
       data: {
         //   Podatki
-        zaznamek: { connect: { db_id: zaznamek.db_id } },
+        zaznamek: { connect: { db_id: db_id } },
         // Informacije
         naslov: oglas.naslov,
         kratek_opis: oglas.kratek_opis,
@@ -40,7 +60,7 @@ async function main() {
       },
     })
 
-    console.log(`Oglas ${db.id}...`)
+    console.log(`Oglas ${db.zaznamek_id}...`)
   }
 }
 
