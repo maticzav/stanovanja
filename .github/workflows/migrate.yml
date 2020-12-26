@@ -22,3 +22,5 @@ jobs:
           POSTGRESQL_URL: ${{ secrets.POSTGRESQL_URL }}
       # Fetch
       - run: yarn start:zaznamki
+        env:
+          POSTGRESQL_URL: ${{ secrets.POSTGRESQL_URL }}
