@@ -1,47 +1,63 @@
 import { PrismaClient } from '@prisma/client'
 
+import { withPrisma } from '../prisma'
 import { naloziOglas } from '../scarpper'
 
 /* Configuration */
 
-const client = new PrismaClient({})
-
 /* Program */
 
-async function main() {
+async function main(client: PrismaClient) {
   // Naloži informacije o oglasih.
-  const zaznamki = await client.zaznamek.findMany({})
+  const zaznamki = await client.zaznamek.findMany({
+    where: {
+      aktiven: true,
+      posredovanje: {
+        in: ['ODDAJA', 'PRODAJA'],
+      },
+    },
+    orderBy: {
+      updated_at: 'desc',
+    },
+    include: {
+      oglasi: {
+        orderBy: { created_at: 'desc' },
+      },
+    },
+  })
 
-  for (const { url, id, db_id } of zaznamki) {
-    const oglas = await naloziOglas(url)
+  const st_zaznamkov = zaznamki.length
+
+  console.log(`Našel ${st_zaznamkov} aktivnih zaznamkov...`)
+
+  for (const [index, zaznamek] of zaznamki.entries()) {
+    const oglas = await naloziOglas(zaznamek.url)
 
     if (oglas === null) continue
 
     // Poglej že obstoječ oglas in primerjaj podatke.
-    const zaznamek = await client.zaznamek.findUnique({
-      where: { db_id: db_id },
-      include: {
-        oglasi: {
-          orderBy: { created_at: 'desc' },
-        },
-      },
-    })
 
     if (zaznamek && zaznamek.oglasi.length > 0) {
       const zadnji_oglas = zaznamek.oglasi[0]
 
       // Če se cena od zadnjega oglasa ni spremenila ne naredi novega zaznamka.
       if (oglas.cena === zadnji_oglas.cena) {
-        console.log(`Nespremenjen ${id}`)
+        console.log(`(${index}/${st_zaznamkov}) Nespremenjen ${zaznamek.id}`)
         continue
       }
+    }
+
+    // Izračunaj meritve
+    let cena_na_m2: number | undefined
+    if (oglas.velikost && oglas.cena) {
+      cena_na_m2 = oglas.cena / oglas.velikost
     }
 
     // Shrani oglas v bazo.
     const db = await client.oglas.create({
       data: {
         //   Podatki
-        zaznamek: { connect: { db_id: db_id } },
+        zaznamek: { connect: { db_id: zaznamek.db_id } },
         // Informacije
         naslov: oglas.naslov,
         kratek_opis: oglas.kratek_opis,
@@ -57,15 +73,17 @@ async function main() {
         cena: oglas.cena,
         leto: oglas.leto,
         st_sob: oglas.st_sob,
+        // Analiza
+        cena_na_m2: cena_na_m2,
       },
     })
 
-    console.log(`Oglas ${db.zaznamek_id}...`)
+    console.log(`(${index}/${st_zaznamkov}) Oglas ${db.zaznamek_id}...`)
   }
 }
 
 /* Poženemo program */
 
 if (require.main === module) {
-  main()
+  withPrisma(main)
 }

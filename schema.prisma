@@ -22,15 +22,20 @@ model Oglas {
     dolg_opis   String?
     slike       String[]
 
+    // Lokacija
     vrsta         String?
     regija        String?
     upravna_enota String?
     obcina        String?
 
+    // Meritve
     velikost Float?
     cena     Float?
     leto     Int?
     st_sob   Float?
+
+    // Analiza
+    cena_na_m2 Float?
 }
 
 enum Posredovanje {
@@ -41,11 +46,14 @@ enum Posredovanje {
 }
 
 model Zaznamek {
-    db_id String @id @default(cuid())
+    db_id      String   @id @default(cuid())
+    created_at DateTime @default(now())
+    updated_at DateTime @default(now()) @updatedAt
 
     id           String       @unique
     url          String
     posredovanje Posredovanje
+    aktiven      Boolean      @default(false)
 
     oglasi Oglas[]
 }
