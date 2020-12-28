@@ -46,11 +46,14 @@ if (require.main === module) {
     context: () => ({ prisma }),
   })
 
+  /* HTTP */
+  const port = parseInt(process.env.PORT || '4000')
+
   const app = express()
 
   apollo.applyMiddleware({ app })
 
-  app.listen(4000, () => {
-    console.log(`🚀 GraphQL service ready at http://localhost:4000/graphql`)
+  app.listen(port, () => {
+    console.log(`🚀 GraphQL ready at http://localhost:${port}/graphql`)
   })
 }
