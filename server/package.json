@@ -2,6 +2,7 @@
   "name": "server",
   "scripts": {
     "start": "ts-node-dev --respawn src/index.ts",
+    "build": "yarn g:tsc",
     "test": "jest"
   },
   "dependencies": {

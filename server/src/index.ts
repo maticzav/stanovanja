@@ -20,7 +20,7 @@ export const schema = makeSchema({
     modules: [{ module: '.prisma/client', alias: 'PrismaClient' }],
   },
   contextType: {
-    module: path.join(__dirname, 'context.ts'),
+    module: path.join(__dirname, '../src/context.ts'),
     export: 'Context',
   },
   outputs: {
