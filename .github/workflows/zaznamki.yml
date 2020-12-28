@@ -25,6 +25,6 @@ jobs:
           node-version: '13.x'
       - run: yarn install
       # Fetch
-      - run: yarn start:zaznamki
+      - run: yarn g:tsn workers/src/bin/zaznamki.ts
         env:
           POSTGRESQL_URL: ${{ secrets.POSTGRESQL_URL }}

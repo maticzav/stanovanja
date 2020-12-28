@@ -20,10 +20,10 @@ model Oglas {
     naslov      String
     kratek_opis String?
     dolg_opis   String?
+    vrsta       String?
     slike       String[]
 
     // Lokacija
-    vrsta         String?
     regija        String?
     upravna_enota String?
     obcina        String?

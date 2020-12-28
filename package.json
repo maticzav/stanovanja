@@ -1,18 +1,16 @@
 {
-  "name": "typescript",
+  "private": true,
+  "workspaces": [
+    "workers",
+    "server"
+  ],
   "scripts": {
-    "start:oglasi": "ts-node src/bin/oglasi.ts",
-    "start:zaznamki": "ts-node src/bin/zaznamki.ts"
-  },
-  "dependencies": {
-    "@prisma/client": "^2.13.1",
-    "node-fetch": "^2.6.1",
-    "node-html-parser": "^2.0.0"
+    "g:tsc": "cd $INIT_CWD && tsc",
+    "g:tsn": "cd $INIT_CWD && ts-node",
+    "g:prisma": "prisma"
   },
   "devDependencies": {
     "@prisma/cli": "^2.13.1",
-    "@types/node": "^14.14.16",
-    "@types/node-fetch": "^2",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "ts-jest": "^26.4.4",
