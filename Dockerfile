@@ -1,5 +1,5 @@
 
-FROM heroku/heroku:18
+FROM heroku/heroku:20
 
 # NodeJS
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - &&\
@@ -15,9 +15,9 @@ WORKDIR /usr/src/app
 # Install Dependencies
 COPY . .
 RUN yarn
+# RUN yarn g:prisma generate (this should be autorun by postinstall script)
 
 # Build Server
-RUN yarn g:prisma generate
 RUN yarn workspace server build
 
 CMD ["node", "./server/dist/index.js"]
