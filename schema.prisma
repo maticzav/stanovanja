@@ -7,6 +7,11 @@ generator client {
     provider = "prisma-client-js"
 }
 
+generator server {
+    provider = "prisma-client-js"
+    output   = "./server/node_modules/.prisma/client"
+}
+
 // Predstavlja eno nepremičnino v času.
 model Oglas {
     id         String   @id @default(cuid())

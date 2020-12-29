@@ -37,7 +37,7 @@ export const queryObject = queryType({
         })
 
         const stanovanja: Stanovanje[] = oglasi.map(
-          (oglas) => oglas as Stanovanje,
+          (oglas: any) => oglas as Stanovanje,
         )
 
         return stanovanja

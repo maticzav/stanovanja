@@ -21,6 +21,6 @@ jobs:
         env:
           POSTGRESQL_URL: ${{ secrets.POSTGRESQL_URL }}
       # Fetch
-      - run: yarn g:tsn workers/bin/zaznamki.ts
+      - run: yarn g:tsn workers/src/bin/zaznamki.ts
         env:
           POSTGRESQL_URL: ${{ secrets.POSTGRESQL_URL }}
