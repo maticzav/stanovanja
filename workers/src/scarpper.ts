@@ -17,7 +17,7 @@ export type Zaznamek = { id: string; url: string }
  */
 export async function* poisciOglase(
   posredovanje: Posredovanje,
-): AsyncGenerator<Zaznamek, void, unknown> {
+): AsyncGenerator<Zaznamek[], void, unknown> {
   /* Preglej vsako posredovanje. */
   let stran = 0
 
@@ -36,7 +36,9 @@ export async function* poisciOglase(
       /* Končaj z listanjem. */
       if (oglasi.length === 0) break
 
-      /* Preberi oglase */
+      /* Preberi oglase in izlušči uporabne v zaznamke. */
+      let zaznamki: Zaznamek[] = []
+
       for (const oglas of oglasi) {
         const id = oglas.id
         const naslov = oglas
@@ -45,8 +47,10 @@ export async function* poisciOglase(
 
         if (naslov === undefined) continue
 
-        yield { id, url: naslov }
+        zaznamki.push({ id, url: naslov })
       }
+
+      yield zaznamki
 
       stran += 1
       /* Končaj tako, da listaš na naslednjo stran. */

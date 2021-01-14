@@ -2,10 +2,16 @@ import { Posredovanje, PrismaClient } from '@prisma/client'
 
 import { withPrisma } from '../prisma'
 import { poisciOglase } from '../scarpper'
+import { sum } from '../utils'
 
 /* Configuration */
 
 const posredovanja: Posredovanje[] = ['NAJEM', 'NAKUP', 'PRODAJA', 'ODDAJA']
+
+/**
+ * Med izvajanjem računamo še povprečen čas za shranjevanje podatkov.
+ */
+let benchmarks: number[] = []
 
 /* Program */
 
@@ -28,27 +34,47 @@ async function main(client: PrismaClient) {
 
   // Poišči oglase v vseh posredovanjih.
   for (const posredovanje of posredovanja) {
-    /* Poišči oglase */
-    for await (const { id, url } of poisciOglase(posredovanje)) {
-      // Shrani oglas v bazo.
-      const zaznamek = await client.zaznamek.upsert({
-        where: { id },
-        // Naredi nov zaznamek v bazi, ki je aktiven.
-        create: {
-          id,
-          url,
-          posredovanje,
-          aktiven: true,
-        },
-        // Naredi zaznamek, da je še vedno aktiven.
-        update: { aktiven: true },
-      })
+    /**
+     * Poiši oglase in si jih shrani v bazo.
+     * Za hitrejše delovanje dobi funkcija skupek oglasov, ne enega po enega.
+     */
+    for await (const zaznamki of poisciOglase(posredovanje)) {
+      // Benchmark
+      const start = Date.now()
 
-      // Posodobi stanje
-      st_zaznamkov += 1
+      /**
+       * Vsak zaznamek spremenimo v task in nato vse hkrati poženemo.
+       */
+      const tasks = await Promise.all(
+        zaznamki.map(async ({ id, url }) => {
+          const zaznamek = await client.zaznamek.upsert({
+            where: { id },
+            // Naredi nov zaznamek v bazi, ki je aktiven.
+            create: {
+              id,
+              url,
+              posredovanje,
+              aktiven: true,
+            },
+            // Naredi zaznamek, da je še vedno aktiven.
+            update: { aktiven: true },
+          })
 
-      // Izpiši stanje
-      console.log(`(${st_zaznamkov}) Zaznamek ${zaznamek.id}...`)
+          // Posodobi stanje
+          st_zaznamkov += 1
+
+          // Izpiši stanje
+          console.log(`(${st_zaznamkov}) zaznamkov ${zaznamek.id}`)
+        }),
+      )
+
+      // Benchmark taske.
+      const end = Date.now()
+      const delta = end - start
+
+      benchmarks.push(delta)
+
+      console.log(`avg: ${Math.floor(sum(benchmarks) / benchmarks.length)} ms`)
     }
   }
 }
