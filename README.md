@@ -3,3 +3,7 @@
 ```bash
 export POSTGRESQL_URL="postgresql://prisma:prisma@localhost:5432/stanovanja"
 ```
+
+## Strani
+
+- nepremicnine.net
